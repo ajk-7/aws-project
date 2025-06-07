@@ -1,13 +1,18 @@
 tasks:
-    - name: aws-cli
-      env:
-          AWS_CLI_AUTO_PROMPT: on-partial
-      init: |
-            cd /workspace 
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-            cd $THEIA_WORKSPACE_ROOT
+  - name: aws-cli
+    env:
+      AWS_CLI_AUTO_PROMPT: on-partial
+    init: |
+      cd /workspace
+      # Install AWS CLI
+      curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+      unzip awscliv2.zip
+      sudo ./aws/install
+      cd $THEIA_WORKSPACE_ROOT
+
+      # Configure GitHub token securely
+      echo "https://ajk-7:${GITHUB_TOKEN}@github.com" > ~/.git-credentials
+      git config --global credential.helper store
 
 vscode:
   extensions:
